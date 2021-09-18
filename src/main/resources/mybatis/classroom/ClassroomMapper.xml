@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lab.project.demo.mapper.ClassroomMapper">
+
+    <insert useGeneratedKeys="true" keyProperty="id" id="addClassroom" parameterType="com.lab.project.demo.domain.ClassroomEntity">
+        INSERT t_school_classroom ( classroom_name, content, classroom_num, sort_no, create_time,create_by, update_time, update_by, version, del_flag )
+        VALUES (#{classroomName},#{content},#{classroomNum},#{sortNo},#{createTime},#{createBy},#{updateTime},#{updateBy},#{version},#{delFlag});
+    </insert>
+</mapper>

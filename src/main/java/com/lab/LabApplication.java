@@ -14,7 +14,8 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 @EnableCaching
 @EnableAsync
-public class LabApplication {
+public class
+LabApplication {
     public static void main(String[] args) {
         System.setProperty("spring.devtools.restart.enabled", "false");
         SpringApplication.run(LabApplication.class, args);

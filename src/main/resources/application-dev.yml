@@ -67,7 +67,7 @@ spring:
     port: 6379
     database: 11
     # 密码
-    password: 123456
+    password: dnc.2009
     # 连接超时时间
     timeout: 10s
     lettuce:
