@@ -5,7 +5,62 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.lab.project.demo.mapper.ClassroomMapper">
 
     <insert useGeneratedKeys="true" keyProperty="id" id="addClassroom" parameterType="com.lab.project.demo.domain.ClassroomEntity">
-        INSERT t_school_classroom ( classroom_name, content, classroom_num, sort_no, create_time,create_by, update_time, update_by, version, del_flag )
-        VALUES (#{classroomName},#{content},#{classroomNum},#{sortNo},#{createTime},#{createBy},#{updateTime},#{updateBy},#{version},#{delFlag});
+
+        INSERT t_school_classroom
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            classroom_name, content, classroom_num, sort_no, create_time,create_by, update_time, version, del_flag,
+            <if test="updateBy != null and updateBy != ''">
+                update_by,
+            </if>
+        </trim>
+
+        <trim prefix=" VALUES(" suffix=")" suffixOverrides=",">
+            #{classroomName},#{content},#{classroomNum},#{sortNo},#{createTime},#{createBy},#{updateTime},#{version},#{delFlag},
+            <if test="updateBy != null and updateBy != ''">
+                #{updateBy},
+            </if>
+        </trim>
     </insert>
+
+    <sql id="getClassroomSql">
+        SELECT
+            id,
+            classroom_name,
+            classroom_num,
+            content,
+            version
+        FROM
+            t_school_classroom
+    </sql>
+    <select id="listClassroom" resultType="com.lab.project.demo.domain.ClassroomEntity" parameterType="java.lang.String">
+        <include refid="getClassroomSql"/>
+        <if test="classroom != '' and classroom != null">
+            WHERE classroom_name LIKE CONCAT(#{classroom},'%')
+        </if>
+    </select>
+    <select id="getClassroomInfoById" resultType="com.lab.project.demo.domain.ClassroomEntity" parameterType="java.lang.Long">
+        <include refid="getClassroomSql"/>
+        where id = #{id}
+    </select>
+
+    <update id="editClassroomInfo" parameterType="com.lab.project.demo.domain.ClassroomEntity">
+        UPDATE t_school_classroom
+        SET
+        <trim suffixOverrides=",">
+            classroom_name = #{classroomName},
+            classroom_num = #{classroomNum},
+            content = #{content},
+            version = #{version} + 1,
+            <if test="updateBy != '' and updateBy != null">
+                update_by = updateBy,
+            </if>
+            <if test="updateTime != null">
+                update_time updateTime,
+            </if>
+        </trim>
+
+        WHERE
+        id = #{id}
+        AND version = #{version}
+    </update>
 </mapper>

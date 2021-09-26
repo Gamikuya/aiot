@@ -1,7 +1,7 @@
 package com.lab.project.demo.domain;
 
 import com.lab.framework.web.domain.BaseEntity;
-import lombok.AllArgsConstructor;
+
 import lombok.Data;
 import lombok.ToString;
 
@@ -9,10 +9,12 @@ import lombok.ToString;
  * @author Mikuya
  */
 @Data
-@AllArgsConstructor
 @ToString
 public class ClassroomEntity extends BaseEntity {
-
+    /**
+     * 序列化id
+     */
+    private static final long serialVersionUID = 1L;
     /**
      * 主键id
      */
@@ -29,5 +31,4 @@ public class ClassroomEntity extends BaseEntity {
      * 教室可容纳人数
      */
     private Integer classroomNum;
-
 }
